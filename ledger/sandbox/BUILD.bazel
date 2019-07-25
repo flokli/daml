@@ -139,7 +139,7 @@ alias(
 daml_compile(
     name = "Test",
     main_src = "src/test/resources/damls/Test.daml",
-    target = "1.dev",
+    target = "1.6",
     visibility = ["//visibility:public"],
 )
 

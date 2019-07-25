@@ -381,7 +381,7 @@ object InterfaceReader {
       case PT.UNIT => \/-((0, PrimType.Unit))
       case PT.BOOL => \/-((0, PrimType.Bool))
       case PT.INT64 => \/-((0, PrimType.Int64))
-      case PT.NUMERIC => \/-((0, PrimType.Decimal))
+      case PT.NUMERIC => \/-((0, PrimType.Numeric))
       case PT.TEXT => \/-((0, PrimType.Text))
       case PT.DATE => \/-((0, PrimType.Date))
       case PT.TIMESTAMP => \/-((0, PrimType.Timestamp))

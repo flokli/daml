@@ -141,8 +141,8 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
     case SCPCons => 2
   }
 
-  private def translate(expr: Expr): SExpr =
-    expr match {
+  private def translate(expr0: Expr): SExpr =
+    expr0 match {
       case EVar(name) => SEVar(lookupIndex(name))
       case EVal(ref) => SEVal(LfDefRef(ref), None)
       case EBuiltin(bf) =>
@@ -156,11 +156,11 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               case BTrace => SBTrace
 
               // Decimal arithmetic
-              case BAddDecimal => SBAdd
-              case BSubDecimal => SBSub
-              case BMulDecimal => SBMul
-              case BDivDecimal => SBDiv
-              case BRoundDecimal => SBRoundDecimal
+              case BAddNumeric => SBAdd
+              case BSubNumeric => SBSub
+              case BMulNumeric => SBMul
+              case BDivNumeric => SBDiv
+              case BRoundNumeric => SBRoundDecimal
 
               // Int64 arithmetic
               case BAddInt64 => SBAdd
@@ -171,8 +171,8 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               case BExpInt64 => SBExpInt64
 
               // Conversions
-              case BInt64ToDecimal => SBInt64ToDecimal
-              case BDecimalToInt64 => SBDecimalToInt64
+              case BInt64ToNumeric => SBInt64ToNumeric
+              case BNumericToInt64 => SBNumericToInt64
               case BDateToUnixDays => SBDateToUnixDays
               case BUnixDaysToDate => SBUnixDaysToDate
               case BTimestampToUnixMicroseconds => SBTimestampToUnixMicroseconds
@@ -184,7 +184,7 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               case BAppendText => SBAppendText
 
               case BToTextInt64 => SBToText
-              case BToTextDecimal => SBToText
+              case BToTextNumeric => SBToText
               case BToTextText => SBToText
               case BToTextTimestamp => SBToText
               case BToTextParty => SBToText
@@ -193,7 +193,7 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               case BToTextCodePoints => SBToTextCodePoints
               case BFromTextParty => SBFromTextParty
               case BFromTextInt64 => SBFromTextInt64
-              case BFromTextDecimal => SBFromTextDecimal
+              case BFromTextNumeric => SBFromTextDecimal
               case BFromTextCodePoints => SBFromTextCodePoints
 
               case BSHA256Text => SBSHA256Text
@@ -207,10 +207,10 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               case BGreaterInt64 => SBGreater
               case BGreaterEqInt64 => SBGreaterEq
 
-              case BLessDecimal => SBLess
-              case BLessEqDecimal => SBLessEq
-              case BGreaterDecimal => SBGreater
-              case BGreaterEqDecimal => SBGreaterEq
+              case BLessNumeric => SBLess
+              case BLessEqNumeric => SBLessEq
+              case BGreaterNumeric => SBGreater
+              case BGreaterEqNumeric => SBGreaterEq
 
               case BLessText => SBLess
               case BLessEqText => SBLessEq
@@ -235,7 +235,7 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
               // Equality
               case BEqualText => SBEqual
               case BEqualInt64 => SBEqual
-              case BEqualDecimal => SBEqual
+              case BEqualNumeric => SBEqual
               case BEqualTimestamp => SBEqual
               case BEqualDate => SBEqual
               case BEqualParty => SBEqual
@@ -268,7 +268,7 @@ final case class Compiler(packages: PackageId PartialFunction Package) {
       case EPrimLit(lit) =>
         SEValue(lit match {
           case PLInt64(i) => SInt64(i)
-          case PLDecimal(d) => SDecimal(d)
+          case PLNumeric(d) => SNumeric(d)
           case PLText(t) => SText(t)
           case PLTimestamp(ts) => STimestamp(ts)
           case PLParty(p) => SParty(p)
