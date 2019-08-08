@@ -1058,7 +1058,7 @@ private class JdbcLedgerDao(
         """insert into packages(package_id, upload_id, source_description, size, known_since, ledger_offset, package)
           |select {package_id}, {upload_id}, {source_description}, {size}, {known_since}, ledger_end, {package}
           |from parameters
-          |where (package_id) not in (select package_id from packages)
+          |where {package_id} not in (select package_id from packages)
           |""".stripMargin
     }
 
